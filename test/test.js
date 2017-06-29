@@ -5,24 +5,37 @@ const assert = require('assert')
 const {
   userLinkDisplay,
   formatTask,
-} = require('format.js')
+} = require('../index.js')
 
 describe('formatTask', () => {
     it('Should return true or false for isCompleted()', () => {
         const task = {
-            isCompleted: true,
+            isCompleted: () => true,
             slackChannelId: 'C024BE7LR',
             name: 'taskOne',
         }
     const output = formatTask(task);
-        assert.equal("boolean", typeof output.isCompleted)
+
+        assert.equal("boolean", typeof output.isCompleted())
     })
 
     it('Should return a string', () => {
+        const task = {
+            isCompleted: () => true,
+            slackChannelId: 'C024BE7LR',
+            name: 'taskOne',
+        }
+    const output = formatTask(task);
         assert.equal("string", typeof task.slackChannelId)
     })
 
     it('Should return a string', () => {
+        const task = {
+            isCompleted: () => true,
+            slackChannelId: 'C024BE7LR',
+            name: 'taskOne',
+        }
+    const output = formatTask(task);
         assert.equal("string", typeof task.name)
     })
 })
