@@ -4,6 +4,7 @@ const assert = require('assert')
 
 const {
   userLinkDisplay,
+  formatTask,
 } = require('format.js')
 
 describe('format', () => {

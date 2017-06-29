@@ -14,6 +14,7 @@ const {
  * @param {String} display - optional readable name
  * @return {String} - The link to the channel formatted for Slack API
  */
+
 function channelLink(slackChannelId, display) {
   if (display) return `<#${slackChannelId}|${display}>`
   return `<#${slackChannelId}>`
