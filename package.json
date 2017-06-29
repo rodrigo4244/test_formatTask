@@ -1,0 +1,18 @@
+{
+  "name": "test_formattask",
+  "version": "1.0.0",
+  "description": "\"Tests for the function formatTask\"",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb-base": "^11.2.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-react": "^7.1.0",
+    "mocha": "^3.4.2"
+  }
+}
