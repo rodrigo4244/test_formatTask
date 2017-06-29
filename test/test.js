@@ -5,38 +5,51 @@ const assert = require('assert')
 const {
   userLinkDisplay,
   formatTask,
-} = require('../index.js')
+} = require('../format/format.js')
 
 describe('formatTask', () => {
-    it('Should return true or false for isCompleted()', () => {
+    it('Should return \'<#C024BE7LR> taskOne\' for this set of parameters', () => {
         const task = {
-            isCompleted: () => true,
+            isCompleted: function() {return true},
             slackChannelId: 'C024BE7LR',
             name: 'taskOne',
         }
-    const output = formatTask(task);
+        const output = formatTask(task);
 
-        assert.equal("boolean", typeof output.isCompleted())
+        assert.strictEqual('<#C024BE7LR> taskOne', output)
     })
 
-    it('Should return a string', () => {
+    it('Should return \':warning:  <#C024BE7LR> taskOne\' for this set of parameters', () => {
         const task = {
-            isCompleted: () => true,
+            isCompleted: function() {return false},
             slackChannelId: 'C024BE7LR',
             name: 'taskOne',
         }
-    const output = formatTask(task);
-        assert.equal("string", typeof task.slackChannelId)
+        const output = formatTask(task)
+
+        assert.strictEqual(':warning:  <#C024BE7LR> taskOne', output) //there's a space after :warning:
     })
 
-    it('Should return a string', () => {
+    it('Should return \':warning:  taskOne\' for this set of parameters', () => {
         const task = {
-            isCompleted: () => true,
-            slackChannelId: 'C024BE7LR',
+            isCompleted: function() {return false},
+            slackChannelId: false,
             name: 'taskOne',
         }
-    const output = formatTask(task);
-        assert.equal("string", typeof task.name)
+        const output = formatTask(task)
+
+        assert.strictEqual(':warning:  taskOne', output)
+    })
+
+    it('Should return \'taskOne\' for this set of parameters', () => {
+        const task = {
+            isCompleted: function() {return true},
+            slackChannelId: false,
+            name: 'taskOne',
+        }
+        const output = formatTask(task)
+
+        assert.strictEqual('taskOne', output)
     })
 })
 
