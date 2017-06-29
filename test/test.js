@@ -16,7 +16,7 @@ describe('formatTask', () => {
         }
         const output = formatTask(task);
 
-        assert.strictEqual('<#C024BE7LR> taskOne', output)
+        assert.strictEqual(`<#${task.slackChannelId}> ` + `${task.name}`, output)
     })
 
     it('Should return \':warning:  <#C024BE7LR> taskOne\' for this set of parameters', () => {
@@ -27,7 +27,7 @@ describe('formatTask', () => {
         }
         const output = formatTask(task)
 
-        assert.strictEqual(':warning:  <#C024BE7LR> taskOne', output) //there's a space after :warning:
+        assert.strictEqual(':warning:  ' + `<#${task.slackChannelId}> ` + `${task.name}`, output) //there's a space after :warning: and after <#${task.slackChannelId}>
     })
 
     it('Should return \':warning:  taskOne\' for this set of parameters', () => {
@@ -38,7 +38,7 @@ describe('formatTask', () => {
         }
         const output = formatTask(task)
 
-        assert.strictEqual(':warning:  taskOne', output)
+        assert.strictEqual(':warning: ' + ' ' + `${task.name}`, output)
     })
 
     it('Should return \'taskOne\' for this set of parameters', () => {
@@ -49,7 +49,7 @@ describe('formatTask', () => {
         }
         const output = formatTask(task)
 
-        assert.strictEqual('taskOne', output)
+        assert.strictEqual(task.name, output)
     })
 })
 
