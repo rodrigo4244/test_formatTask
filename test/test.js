@@ -27,70 +27,58 @@ describe('format', () => {
   })
 
   describe('formatTask', () => {
-    const setup = (par = { isCompl: true, channelId: 'C024BE7LR', nam: 'task One' }) => {
-      if (typeof par.isCompl === 'undefined') {
-        par.isCompl = true
-      }
-      if (typeof par.channelId === 'undefined') {
-        par.channelId = 'C024BE7LR'
-      }
-      if (typeof par.nam === 'undefined') {
-        par.nam = 'task One'
-      }
+    const setup = ({ isCompl = true, channelId = 'C024BE7LR', name = 'task One' } = {}) => ({
+      isCompleted() { return isCompl },
+      slackChannelId: channelId,
+      name,
+    })
 
-      return {
-        isCompleted() { return par.isCompl },
-        slackChannelId: par.channelId,
-        name: par.nam,
-      }
-    }
-
-    it('should generate an EMOJI_WARNING', () => {
+    it('should generate an emoji warning for incomplete tasks', () => {
       const task = setup({ isCompl: false })
-      
+
       const actual = formatTask(task)
-      
+
       assert.strictEqual(actual.includes(EMOJI_WARNING), true, 'actual should have included a warning emoji')
     })
 
-    it('shouldn\'t generate an emoji warning', () => {
+    it('should not generate an emoji warning for complete tasks', () => {
       const task = setup({ isCompl: true })
-      
+
       const actual = formatTask(task)
 
-      assert.strictEqual(actual.includes(EMOJI_WARNING), false, 'actual shouldn\'t have included the warning emoji')
+      assert.strictEqual(actual.includes(EMOJI_WARNING), false, 'actual should not have included the warning emoji')
     })
-      
-    it('should generate the channel link', () => {
+
+    it('should generate the slack channel link for a valid channelId', () => {
       const task = setup({ channelId: 'C024BE7LR' })
-      
+
       const actual = formatTask(task)
-      
-      assert.strictEqual(actual.includes(task.slackChannelId), true, 'actual should have generated the channel link')
+
+      assert.strictEqual(actual.includes(task.slackChannelId), true, 'actual should generate a valid slack channel link')
     })
 
-    it('shouldn\'t generate the channel link', () => {
+    it('should not generate the slack channel link for an invalid channelId', () => {
       const task = setup({ channelId: false })
-      
+
       const actual = formatTask(task)
 
-      assert.strictEqual(actual.includes('false'), false, 'actual is generating a false channel link')
+      assert.strictEqual(actual.includes('false'), false, 'actual is generating an invalid slack channel link')
     })
 
-    it('should generate the task name', () => {
-      const task = setup({ nam: 'task One' })
-      
+    it('should generate the task name for a valid name', () => {
+      const task = setup({ name: 'task One' })
+
       const actual = formatTask(task)
-      
-      assert.strictEqual(actual.includes(task.name), true, 'actual should generate the task name')
+
+      assert.strictEqual(actual.includes(task.name), true, 'actual should generate a valid task name')
     })
 
-    it('shouldn\'t generate the task name', () => {
-      const task = setup({ nam: false })
-      
+    it('should not generate the task name for an invalid name', () => {
+      const task = setup({ name: false })
+
       const actual = formatTask(task)
 
-      assert.strictEqual(actual.includes('false'), false, 'actual is generating a false task name')
+      assert.strictEqual(actual.includes('false'), false, 'actual is generating an invalid task name')
     })
   })
 })

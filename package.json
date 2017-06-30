@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint .\\.eslintrc.json .\\index.js --fix",
+    "lintTest": "eslint .\\.eslintrc.json .\\test\\test.js --fix",
     "test": "mocha",
-    "pretest": "npm run lint"
+    "pretest": "npm run lint && npm run lintTest"
   },
   "author": "",
   "license": "ISC",
