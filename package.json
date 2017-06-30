@@ -4,8 +4,9 @@
   "description": "\"Tests for the function formatTask\"",
   "main": "index.js",
   "scripts": {
+    "lint": "eslint .\\.eslintrc.json .\\index.js --fix",
     "test": "mocha",
-    "pretest": "eslint .\\.eslintrc.json .\\index.js --fix"
+    "pretest": "npm run lint"
   },
   "author": "",
   "license": "ISC",

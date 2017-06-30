@@ -56,3 +56,33 @@ console.log(b.toFixed(4), typeof b.toFixed(4), b, typeof b)
 const c = `<#${false}>`
 
 console.log(c)
+
+//"place": "node .\\placeholder.js",
+ //&& npm run place
+
+
+function foo (par = { isCompl: true, channelId: 'C024BE7LR', nam: 'task One' }) {
+    //console.log(par.isCompl)
+    //console.log(par.channelId)
+    //console.log(par.nam)
+
+    if(typeof par.isCompl === 'undefined') {
+      par.isCompl = true
+    }
+    if(typeof par.channelId === 'undefined') {
+      par.channelId = 'C024BE7LR'
+    }
+    if(typeof par.nam === 'undefined') {
+      par.nam = 'task One'
+    }
+
+    console.log(par)
+
+    return {
+      isCompleted() { return par.isCompl },
+      slackChannelId: par.channelId,
+      name: par.nam,
+  }
+}
+console.log(foo({ channelId: 'B123BE7LR' }))
+//console.log(foo({ isCompl: false }).isCompleted())
