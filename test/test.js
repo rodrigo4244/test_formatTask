@@ -3,9 +3,10 @@
 const assert = require('assert')
 
 const {
+  EMOJI_WARNING,
   userLinkDisplay,
   formatTask,
-} = require('../format/format.js')
+} = require('..')
 
 describe('format', () => {
   describe('userLinkDisplay', () => {
@@ -26,48 +27,58 @@ describe('format', () => {
   })
 
   describe('formatTask', () => {
-    it('Should return \'<#C024BE7LR> taskOne\' for this set of parameters', () => {
-      const task = {
-        isCompleted() { return true },
-        slackChannelId: 'C024BE7LR',
-        name: 'taskOne',
-      }
-      const output = formatTask(task)
-
-      assert.strictEqual(`<#${task.slackChannelId}> ` + `${task.name}`, output)
+    const setup = (isCompl, channelId, nam) => ({
+      isCompleted() { return isCompl },
+      slackChannelId: channelId,
+      name: nam,
     })
 
-    it('Should return \':warning:  <#C024BE7LR> taskOne\' for this set of parameters', () => {
-      const task = {
-        isCompleted() { return false },
-        slackChannelId: 'C024BE7LR',
-        name: 'taskOne',
-      }
-      const output = formatTask(task)
+    it('Should generate EMOJI_WARNING', () => {
+      const task = setup(false, 'C024BE7LR', 'task One')
 
-      assert.strictEqual(':warning:  ' + `<#${task.slackChannelId}> ` + `${task.name}`, output) // there's a space after :warning: and after <#${task.slackChannelId}>
+      const actual = formatTask(task)
+
+      assert.strictEqual(actual.includes(EMOJI_WARNING), true, 'actual should have included a warning emoji')
     })
 
-    it('Should return \':warning:  taskOne\' for this set of parameters', () => {
-      const task = {
-        isCompleted() { return false },
-        slackChannelId: false,
-        name: 'taskOne',
-      }
-      const output = formatTask(task)
+    it('Shouldn\'t generate the emoji warning', () => {
+      const task = setup(true, 'C024BE7LR', 'task One')
+      
+      const actual = formatTask(task)
 
-      assert.strictEqual(':warning: ' + ' ' + `${task.name}`, output) // this ' ' is because of the join inside format.js
+      assert.strictEqual(actual.includes(EMOJI_WARNING), false, 'actual should\'t have included the warning emoji')
+    })
+      
+    it('Should generate the channel link', () => {
+      const task = setup(false, 'C024BE7LR', 'task One')
+      
+      const actual = formatTask(task)
+      //':warning: ' + ' ' + `${task.name}`
+      assert.strictEqual(actual.includes(task.slackChannelId), true, 'actual should have generated the channel link')
     })
 
-    it('Should return \'taskOne\' for this set of parameters', () => {
-      const task = {
-        isCompleted() { return true },
-        slackChannelId: false,
-        name: 'taskOne',
-      }
-      const output = formatTask(task)
+    it('Shouldn\'t generate the channel link', () => {
+      const task = setup(false, false, 'task One')
+      
+      const actual = formatTask(task)
 
-      assert.strictEqual(task.name, output)
+      assert.strictEqual(actual.includes('false'), false, 'actual is generating a false channel link')
+    })
+
+    it('Should generate the task name', () => {
+      const task = setup(false, 'C024BE7LR', 'task One')
+      
+      const actual = formatTask(task)
+      
+      assert.strictEqual(actual.includes(task.name), true, 'actual should generate the task name')
+    })
+
+    it('Shouldn\'t generate the task name', () => {
+      const task = setup(false, 'C024BE7LR', false)
+      
+      const actual = formatTask(task)
+
+      assert.strictEqual(actual.includes('false'), false, 'actual is generating a false task name')
     })
   })
 })

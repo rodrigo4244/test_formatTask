@@ -1,37 +1,44 @@
 'use strict'
 
 const {
+  compact,
   flow,
-  add,
+  get,
+  join,
 } = require('lodash/fp')
 
-const task = {
-  isCompleted: true,
-  slackChannelId: 'C024BE7LR',
-  name: 'taskOne',
-}
+const EMOJI_WARNING = ':warning: '
 
-console.log(typeof task.isCompleted)
-console.log(typeof task.slackChannelId)
-console.log(typeof task.name)
-
-function square(n) {
-  return n * n
-}
-
-const addSquare = flow([add, square])
-console.log(addSquare(5, 2))
-// => 25
-
-const lemons = false;
-(lemons) ? console.log('please give me a lemonade') : console.log('then give me a beer')
+/**
+ * Returns a formatted link to a channel for use with the Slack API
+ * @method channelLink
+ * @param {String} slackChannelId - format is like C024BE7LR
+ * @param {String} display - optional readable name
+ * @return {String} - The link to the channel formatted for Slack API
+ */
 
 function channelLink(slackChannelId, display) {
   if (display) return `<#${slackChannelId}|${display}>`
   return `<#${slackChannelId}>`
 }
 
-console.log(channelLink('C024BE7LR'))
+function userLinkDisplay(user) {
+  if (get('username')(user)) return `@${user.username}`
+  if (user) return `@${user}`
+  return 'None'
+}
 
-let a = () => { return square(2) + 1 } //example of arrow function.
-console.log(a())
+function formatTask(task) {
+  const cleanJoin = flow(compact, join(' '))
+  return cleanJoin([
+    task.isCompleted() ? '' : EMOJI_WARNING,
+    task.slackChannelId ? channelLink(task.slackChannelId) : '',
+    task.name,
+  ])
+}
+
+module.exports = {
+  EMOJI_WARNING,
+  formatTask,
+  userLinkDisplay,
+}
