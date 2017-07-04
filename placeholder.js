@@ -86,3 +86,24 @@ function foo(par = { isCompl: true, channelId: 'C024BE7LR', nam: 'task One' }) {
 }
 console.log(foo({ channelId: 'B123BE7LR' }))
 // console.log(foo({ isCompl: false }).isCompleted())
+
+var foo = {
+	a: 42
+};
+
+// create `bar` and link it to `foo`
+var bar = Object.create( foo );
+
+bar.b = "hello world";
+
+console.log(bar.b);		// "hello world"
+console.log(bar.a);		// 42 <-- delegated to `foo`
+console.log(foo);
+console.log(foo.b); // undefined
+
+
+const d = NaN;
+
+if (Number.isNaN(d)) {
+  console.log('This is not a number!')
+}

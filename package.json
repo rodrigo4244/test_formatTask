@@ -4,8 +4,8 @@
   "description": "\"Tests for the function formatTask\"",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint .\\.eslintrc.json .\\index.js --fix",
-    "lintTest": "eslint .\\.eslintrc.json .\\test\\test.js --fix",
+    "lint": "eslint index.js --fix",
+    "lintTest": "eslint .\\test\\formatTask.spec.js --fix",
     "test": "mocha",
     "pretest": "npm run lint && npm run lintTest"
   },
@@ -17,6 +17,7 @@
     "eslint-config-airbnb-base": "^11.2.0",
     "eslint-config-standard": "^10.2.1",
     "eslint-plugin-import": "^2.6.1",
+    "eslint-plugin-lodash-fp": "^2.1.3",
     "eslint-plugin-node": "^5.1.0",
     "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-react": "^7.1.0",
