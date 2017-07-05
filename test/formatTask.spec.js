@@ -39,7 +39,7 @@ describe('format', () => {
 
       const actual = formatTask(task)
 
-      assert.strictEqual(actual.includes(WARNING_EMOJI), true, 'actual did not include a warning emoji')
+      assert.strictEqual(actual.includes(WARNING_EMOJI), true, 'did not include a warning emoji')
     })
 
     it('should not return a string with a warning emoji for complete tasks', () => {
@@ -47,7 +47,7 @@ describe('format', () => {
 
       const actual = formatTask(task)
 
-      assert.strictEqual(actual.includes(WARNING_EMOJI), false, 'actual did include a warning emoji')
+      assert.strictEqual(actual.includes(WARNING_EMOJI), false, 'did include a warning emoji')
     })
 
     it('should return a string with the task name', () => {
@@ -55,7 +55,7 @@ describe('format', () => {
 
       const actual = formatTask(task)
 
-      assert.strictEqual(actual.includes(task.name), true, 'actual did not return a string with the task name')
+      assert.strictEqual(actual.includes(task.name), true, 'did not return a string with the task name')
     })
 
     it('should not return the task name', () => {
@@ -63,7 +63,7 @@ describe('format', () => {
 
       const actual = formatTask(task)
 
-      assert.strictEqual(actual.includes('false'), false, 'actual did return a task name with false included')
+      assert.strictEqual(actual.includes('false'), false, 'did return a task name with false included')
     })
   })
 
@@ -78,23 +78,7 @@ describe('format', () => {
 
       const actual = channelLink(task.slackChannelId, task.display)
 
-      assert.strictEqual(actual.includes(task.slackChannelId), true, 'actual did not included a string with a slack channel link')
-    })
-
-    it('should not return the slack channel link with false appended', () => {
-      const task = setup({ slackChannelId: false })
-
-      const actual = channelLink(task.slackChannelId, task.display)
-
-      assert.strictEqual(actual.includes('false'), false, 'actual did return a slack channel link with false appended')
-    })
-
-    it('should return the slack channel link with the display string', () => {
-      const task = setup({ display: '142' })
-
-      const actual = channelLink(task.slackChannelId, task.display)
-
-      assert.strictEqual(actual.includes(task.display), true, 'actual did return a slack channel link without the display string')
+      assert.strictEqual(actual.includes(task.slackChannelId), true, 'did not included a string with a slack channel link')
     })
   })
 })
