@@ -107,3 +107,5 @@ const d = NaN;
 if (Number.isNaN(d)) {
   console.log('This is not a number!')
 }
+
+console.log('Git Test')

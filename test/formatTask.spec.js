@@ -85,7 +85,6 @@ describe('format', () => {
       const task = setup({ slackChannelId: false })
 
       const actual = channelLink(task.slackChannelId, task.display)
-      console.log(actual)
 
       assert.strictEqual(actual.includes('false'), false, 'actual did return a slack channel link with false appended')
     })
