@@ -4,11 +4,10 @@
   "description": "\"Tests for the function formatTask\"",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint index.js --fix",
-    "lintTest": "eslint .\\test\\formatTask.spec.js --fix",
-    "test": "mocha",
-    "pretest": "npm run lint && npm run lintTest"
-  },
+    "lint": "eslint index.js test --fix",
+    "pretest": "npm run lint",
+    "test": "mocha"
+    },
   "author": "",
   "license": "ISC",
   "devDependencies": {

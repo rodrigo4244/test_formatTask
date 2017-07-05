@@ -7,7 +7,7 @@ const {
   join,
 } = require('lodash/fp')
 
-const EMOJI_WARNING = ':warning: '
+const WARNING_EMOJI = ':warning: '
 
 /**
  * Returns a formatted link to a channel for use with the Slack API
@@ -31,14 +31,15 @@ function userLinkDisplay(user) {
 function formatTask(task) {
   const cleanJoin = flow(compact, join(' '))
   return cleanJoin([
-    task.isCompleted() ? '' : EMOJI_WARNING,
+    task.isCompleted() ? '' : WARNING_EMOJI,
     task.slackChannelId ? channelLink(task.slackChannelId) : '',
     task.name,
   ])
 }
 
 module.exports = {
-  EMOJI_WARNING,
+  WARNING_EMOJI,
+  channelLink,
   formatTask,
   userLinkDisplay,
 }
