@@ -9,6 +9,10 @@ const {
   formatTask,
 } = require('..')
 
+const {
+  includes,
+} = require('lodash/fp')
+
 describe('format', () => {
   describe('userLinkDisplay', () => {
     it('should return a string with the user link for display', () => {
@@ -39,7 +43,8 @@ describe('format', () => {
 
       const actual = formatTask(task)
 
-      assert.strictEqual(actual.includes(WARNING_EMOJI), true, 'did not include a warning emoji')
+      // assert.strictEqual(actual.includes(WARNING_EMOJI), true, 'did not include a warning emoji')
+      assert.strictEqual(includes(WARNING_EMOJI)(actual), true, 'did not include a warning emoji') // Using Functional Programming
     })
 
     it('should not return a string with a warning emoji for complete tasks', () => {
@@ -47,7 +52,8 @@ describe('format', () => {
 
       const actual = formatTask(task)
 
-      assert.strictEqual(actual.includes(WARNING_EMOJI), false, 'did include a warning emoji')
+      // assert.strictEqual(actual.includes(WARNING_EMOJI), false, 'did include a warning emoji')
+      assert.strictEqual(includes(WARNING_EMOJI)(actual), false, 'did include a warning emoji')
     })
 
     it('should return a string with the task name', () => {
@@ -55,7 +61,8 @@ describe('format', () => {
 
       const actual = formatTask(task)
 
-      assert.strictEqual(actual.includes(task.name), true, 'did not return a string with the task name')
+      // assert.strictEqual(actual.includes(task.name), true, 'did not return a string with the task name')
+      assert.strictEqual(includes(task.name)(actual), true, 'did not return a string with the task name')
     })
 
     it('should not return the task name', () => {
@@ -63,7 +70,8 @@ describe('format', () => {
 
       const actual = formatTask(task)
 
-      assert.strictEqual(actual.includes('false'), false, 'did return a task name with false included')
+      // assert.strictEqual(actual.includes('false'), false, 'returned a task name with false included')
+      assert.strictEqual(includes('false')(actual), false, 'returned a task name with false included')
     })
   })
 
@@ -78,7 +86,8 @@ describe('format', () => {
 
       const actual = channelLink(task.slackChannelId, task.display)
 
-      assert.strictEqual(actual.includes(task.slackChannelId), true, 'did not included a string with a slack channel link')
+      // assert.strictEqual(actual.includes(task.slackChannelId), true, 'did not included a string with a slack channel link')
+      assert.strictEqual(includes(task.slackChannelId)(actual), true, 'did not included a string with a slack channel link')
     })
   })
 })
